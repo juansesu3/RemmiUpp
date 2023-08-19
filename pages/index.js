@@ -16,7 +16,7 @@ const Home = () => {
       setExpenses(response.data);
     });
     totalLesss(expenses);
-  }, [expenses]);
+  }, []);
 
   const totalLesss = (lesses) => {
     const totalAmount = lesses.reduce(

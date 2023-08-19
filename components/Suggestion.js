@@ -8,18 +8,40 @@ const Suggestion = () => {
   const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const [expenses, setExpenses] = useState([]);
+  const [pocket, setPocket] = useState(Number);
   const [add, setAdd] = useState([]);
+  const [lesses, setLessses] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/expenses").then((response) => {
-      setExpenses(response.data);
-    });
     axios.get("api/refill").then((response) => {
       setAdd(response.data);
     });
+    axios.get("/api/expenses").then((response) => {
+      setLessses(response.data);
+    });
   }, []);
+
+  useEffect(() => {
+    const totalAddAmount = totalAdd(add);
+    const totalLessesAmount = totalLesss(lesses);
+    const pocketBalance = totalAddAmount - totalLessesAmount;
+    setPocket(pocketBalance);
+  }, [add, lesses]);
+
+  const totalAdd = (add) => {
+    const totalAmount = add.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.amount,
+      0
+    );
+    return totalAmount;
+  };
+  const totalLesss = (lesses) => {
+    const totalAmount = lesses.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.amount,
+      0
+    );
+    return totalAmount;
+  };
 
   const handleSubmit = (e) => {
     const OutPrompt = {
@@ -38,7 +60,7 @@ const Suggestion = () => {
     const url = "https://api.openai.com/v1/chat/completions";
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer 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`,
+      Authorization: `Bearer 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`,
     };
     const data = {
       /*model: "gpt-3.5-turbo",
@@ -59,9 +81,11 @@ const Suggestion = () => {
         {
           role: "user",
           content: `Hi there, provide of the following data:
-          ${JSON.stringify(expenses)},
-
+          
+          ${JSON.stringify(pocket)},
           ${JSON.stringify(add)},
+          ${JSON.stringify(lesses)},
+         
    
           ${inputValue}`,
         },
