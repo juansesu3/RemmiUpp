@@ -26,13 +26,7 @@ const FormExpenses = () => {
   return (
     <div className="rounded-md w-full">
       <form onSubmit={handleSubmit} className="md:w-1/2">
-        <label>Date</label>
-        <input
-          value={date}
-          onChange={(ev) => setDate(ev.target.value)}
-          type="text"
-          placeholder="fomrat: (mm/dd/yyyy)"
-        />
+      
         <label>Store</label>
         <input
           value={storeName}

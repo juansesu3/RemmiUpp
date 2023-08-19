@@ -9,15 +9,10 @@ const handle = async (req, res) => {
     if (req.query?.id) {
       res.json(await Expenses.findOne({ _id: req.query.id }));
     } else {
-      const expenses = await Expenses.find();
+      const expenses = await Expenses.find().sort({ createdAt: -1 });
 
       // Ordenar los gastos por fecha en orden ascendente
-      expenses.sort((a, b) => {
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
-        return dateB - dateA;
-      });
-
+      
       res.json(expenses);
     }
   }

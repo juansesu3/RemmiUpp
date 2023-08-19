@@ -39,7 +39,7 @@ const ExpensesPage = () => {
                   <td className="whitespace-nowrap">
                     {exp.amount} <span className="text-red-600">€</span>
                   </td>
-                  <td>{exp.date}</td>
+                  <td>{exp.storeName}</td>
 
                   <td>
                     {" "}
