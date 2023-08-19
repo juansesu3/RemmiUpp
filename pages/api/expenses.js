@@ -1,0 +1,43 @@
+import { mongooseConnect } from "@/lib/mongoose";
+import { Expenses } from "@/models/expenses";
+
+const handle = async (req, res) => {
+  await mongooseConnect();
+  const { method } = req;
+
+  if (method === "GET") {
+    if (req.query?.id) {
+      res.json(await Expenses.findOne({ _id: req.query.id }));
+    } else {
+      const expenses = await Expenses.find();
+
+      // Ordenar los gastos por fecha en orden ascendente
+      expenses.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateB - dateA;
+      });
+
+      res.json(expenses);
+    }
+  }
+
+  if (method === "POST") {
+    const { date, storeName, imgCheck, amount, expType } = req.body;
+    const expDoc = await Expenses.create({
+      date,
+      storeName,
+      imgCheck,
+      amount,
+      expType,
+    });
+    res.json(expDoc);
+  }
+  if (method === "DELETE") {
+    if (req.query?.id) {
+      await Expenses.deleteOne({ _id: req.query.id });
+      res.json(true);
+    }
+  }
+};
+export default handle;
