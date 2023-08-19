@@ -4,6 +4,7 @@ import { useState } from "react";
 import Suggestion from "./Suggestion";
 
 const Layout = ({ children }) => {
+
   const [showNav, setShowNav] = useState(false);
   const { data: session } = useSession();
   if (!session) {

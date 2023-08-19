@@ -36,7 +36,9 @@ const ExpensesPage = () => {
             {expenses.length > 0 &&
               expenses.map((exp) => (
                 <tr key={exp._id}>
-                  <td className="whitespace-nowrap">{exp.amount} €</td>
+                  <td className="whitespace-nowrap">
+                    {exp.amount} <span className="text-red-600">€</span>
+                  </td>
                   <td>{exp.date}</td>
 
                   <td>

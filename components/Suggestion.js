@@ -1,7 +1,8 @@
+"use client"
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-
+require("dotenv").config();
 const Suggestion = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +61,7 @@ const Suggestion = () => {
     const url = "https://api.openai.com/v1/chat/completions";
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer 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`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
     };
     const data = {
       /*model: "gpt-3.5-turbo",
