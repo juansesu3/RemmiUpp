@@ -1,11 +1,12 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Refill } from "@/models/refill";
+import { isAdminRequest } from "./auth/[...nextauth]";
 
 const handle = async (req, res) => {
-  const { method } = req;
   await mongooseConnect();
   await isAdminRequest(req, res);
 
+  const { method } = req;
   if (method === "GET") {
     if (req.query?.id) {
       res.json(await Refill.findOne({ _id: req.query.id }));

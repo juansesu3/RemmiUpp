@@ -1,16 +1,23 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const AdminsPage = () => {
   const [email, setEmail] = useState("");
+  const [emails, setEmails] = useState([]);
   const addAdmin = async (ev) => {
     ev.preventDefault();
     axios.post("/api/admins", { email }).then((res) => {
       console.log(res.data);
-      setEmail("")
+      setEmail("");
     });
   };
+  useEffect(() => {
+    axios.get("/api/admins").then((response) => {
+      setEmails(response.data);
+    });
+  }, []);
+
   return (
     <Layout>
       <h1 className="text-primary">Existing admins</h1>
@@ -22,11 +29,14 @@ const AdminsPage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="text-start text-white p-4">
-              juan.se.suarez.ra@gmail.com
-            </td>
-          </tr>
+          {emails.length > 0 &&
+            emails.map((email) => (
+              <tr key={email._id}>
+                <td className="text-start text-white p-4">
+                  juan.se.suarez.ra@gmail.com
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
       <h2 className="mt-4  text-primary">Add new admin</h2>
