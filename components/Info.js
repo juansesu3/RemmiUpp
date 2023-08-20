@@ -41,7 +41,7 @@ const Info = ({ swal }) => {
           />
         </svg>
       </div>
-      <div>Get a refill!</div>
+      <div>Got a refill!</div>
     </div>
   );
 

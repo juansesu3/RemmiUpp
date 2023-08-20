@@ -1,8 +1,12 @@
 "use client"
+
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 require("dotenv").config();
+
+
+
 const Suggestion = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
@@ -44,6 +48,7 @@ const Suggestion = () => {
     return totalAmount;
   };
 
+
   const handleSubmit = (e) => {
     const OutPrompt = {
       message: `${inputValue} `,
@@ -83,9 +88,10 @@ const Suggestion = () => {
           role: "user",
           content: `Hi there, provide of the following data:
           
-          ${JSON.stringify(pocket)},
-          ${JSON.stringify(add)},
-          ${JSON.stringify(lesses)},
+          availablemoney:{${JSON.stringify(pocket)}}
+          refills:{${JSON.stringify(add)}},
+
+          expenses:{${JSON.stringify(lesses)}},
          
    
           ${inputValue}`,

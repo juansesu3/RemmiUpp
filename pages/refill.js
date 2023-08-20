@@ -13,7 +13,7 @@ const RechargePage = () => {
       setRefills(response.data);
     });
   }, []);
-  console.log(refilss);
+  
   return (
     <Layout>
       <h1 className="text-primary ">Refill page</h1>
