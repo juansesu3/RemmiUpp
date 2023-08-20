@@ -1,11 +1,9 @@
-"use client"
+"use client";
 
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 require("dotenv").config();
-
-
 
 const Suggestion = () => {
   const { data: session } = useSession();
@@ -48,7 +46,6 @@ const Suggestion = () => {
     return totalAmount;
   };
 
-
   const handleSubmit = (e) => {
     const OutPrompt = {
       message: `${inputValue} `,
@@ -79,21 +76,23 @@ const Suggestion = () => {
       messages: [
         {
           role: "system",
-          content: `Welcome to the user, respond the user as Mr. ${session?.user?.name
+          content: `Respond the user as Mr. ${session?.user?.name
             .split(" ")
-            .shift()} and say  I'm here to help you my master!  Your behavior will be like a responsible, attentive and nice accountant woman 
-          Limit the response to 200 caracters `,
+            .shift()} and say  "I'm here to help you!" 
+            Your behavior will be a responsible, 
+            attentive, nice  assistent and accountant woman.
+            Always you help the user to improve their finacial skills.
+            Limit the response to 200 caracters `,
         },
         {
           role: "user",
           content: `Hi there, provide of the following data:
-          
-          availablemoney:{${JSON.stringify(pocket)}}
-          refills:{${JSON.stringify(add)}},
-
-          expenses:{${JSON.stringify(lesses)}},
+          This is refills:{${JSON.stringify(add)}},
+          This is expenses:{${JSON.stringify(lesses)}}, 
+          this available money after (expenses-refills): {${JSON.stringify(
+            pocket
+          )}},
          
-   
           ${inputValue}`,
         },
       ],
@@ -150,12 +149,16 @@ const Suggestion = () => {
         <form onSubmit={handleSubmit}>
           <div className=" full flex flex-col gap-2 rounded-md  bg-transparent ">
             <div>
-              <span class="relative flex flex-col h-6 w-6 mx-auto my-2 ">
+              <span class="relative animate-pulse  flex flex-col h-6 w-6 mx-auto my-2 ">
                 <span
-                  class={`animate-ping absolute inline-flex h-full w-full rounded-full ${
-                    isLoading ? "bg-red-400" : "bg-sky-400"
+                  class={`absolute inline-flex h-full w-full rounded-full ${
+                    isLoading
+                      ? "bg-red-400 opacity-75"
+                      : "bg-sky-400 opacity-75"
                   } opacity-75`}
-                ></span>
+                >
+                  r
+                </span>
                 <span
                   class={`relative inline-flex rounded-full h-6 w-6${
                     isLoading ? " bg-red-500" : " bg-sky-500 "
@@ -211,7 +214,7 @@ const Suggestion = () => {
             />
           </svg>
         ) : (
-          <span className="animate-ping flex items-center justify-center w-6 h-6 rounded-full bg-sky-400 opacity-75">
+          <span className="animate-ping flex items-center justify-center w-6 h-6 rounded-full bg-sky-200 opacity-75">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

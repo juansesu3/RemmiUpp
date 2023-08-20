@@ -6,8 +6,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-  const api = process.env.REACT_APP_OPENAI_API_KEY
-  console.log(api)
+  const api = process.env.REACT_APP_OPENAI_API_KEY;
+  console.log(api);
   const { data: session } = useSession();
   const [expenses, setExpenses] = useState([]);
   const conte =
@@ -62,15 +62,17 @@ const Home = () => {
           </div>
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Store</h3>
-            <p className="text-primary text-4xl">Mercadona</p>
+            <p className="text-primary text-4xl">
+              {expenses.slice(0, 7)[0]?.storeName}
+            </p>
             <p className="text-gray-500 text-center">
-              the store you visit most often
+              the last store you visit this week
             </p>
           </div>
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Expenses</h3>
             <p className="text-primary text-4xl">
-              {totalLesss(expenses.slice(0, 7))} €
+              {totalLesss(expenses.slice(0, 7)).toFixed(2)} €
             </p>
             <p className="text-gray-500 text-center">
               the mount expenses this week{" "}
@@ -93,9 +95,13 @@ const Home = () => {
           </div>
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Store</h3>
-            <p className="text-primary text-4xl">Mercadona</p>
+            <p className="text-primary text-4xl">
+              {expenses.slice(8, 15)[0] > 0
+                ? expenses.slice(8, 15)[0].storeName
+                : "..."}
+            </p>
             <p className="text-gray-500 text-center">
-              the store you visit most often
+              the last store you visit last week
             </p>
           </div>
           <div className={conte}>

@@ -39,26 +39,6 @@ label {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .btn-primary {
     @apply bg-primary text-white px-4 py-1 rounded-sm shadow-sm;
 
