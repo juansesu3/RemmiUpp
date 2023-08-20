@@ -146,7 +146,7 @@ const Suggestion = () => {
             </>
           ))}
         </div>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className=" full flex flex-col gap-2 rounded-md  bg-transparent ">
             <div>
               <span class="relative animate-pulse  flex flex-col h-6 w-6 mx-auto my-2 ">
@@ -174,7 +174,11 @@ const Suggestion = () => {
                 value={inputValue}
                 onChange={(ev) => setInputValue(ev.target.value)}
               />
-              <button type="submit" className="shadow-md btn-primary">
+              <button
+                onClick={handleSubmit}
+                type="button"
+                className="shadow-md btn-primary"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

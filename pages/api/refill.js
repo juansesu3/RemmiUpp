@@ -4,6 +4,7 @@ import { Refill } from "@/models/refill";
 const handle = async (req, res) => {
   const { method } = req;
   await mongooseConnect();
+  await isAdminRequest(req, res);
 
   if (method === "GET") {
     if (req.query?.id) {

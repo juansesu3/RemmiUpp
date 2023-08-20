@@ -1,8 +1,12 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Expenses } from "@/models/expenses";
+import { isAdminRequest } from "./auth/[...nextauth]";
 
 const handle = async (req, res) => {
+  
   await mongooseConnect();
+  await isAdminRequest(req, res);
+  
   const { method } = req;
 
   if (method === "GET") {

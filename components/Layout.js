@@ -4,12 +4,11 @@ import { useState } from "react";
 import Suggestion from "./Suggestion";
 
 const Layout = ({ children }) => {
-
   const [showNav, setShowNav] = useState(false);
   const { data: session } = useSession();
   if (!session) {
     return (
-      <div className="bg-black w-screen h-screen flex items-center">
+      <div className="bg-[#1d1d1f] w-screen h-screen flex items-center">
         <div className="text-center w-full ">
           <div className="flex flex-col items-center justify-center">
             <p>
