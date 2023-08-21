@@ -62,7 +62,7 @@ const Home = () => {
           </div>
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Store</h3>
-            <p className="text-primary text-4xl">
+            <p className="text-primary text-4xl text-center">
               {expenses.slice(0, 7)[0]?.storeName}
             </p>
             <p className="text-gray-500 text-center">

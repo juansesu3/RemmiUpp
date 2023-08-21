@@ -119,11 +119,11 @@ const Suggestion = () => {
   return (
     <div className="relative ">
       <div
-        className={`fixed bottom-0 right-6 w-64  shadow-md flex flex-col gap-2 p-4 rounded-md  bg-[#1d1d1f]   mb-20 ${
-          isOpen ? "" : "hidden"
+        className={`fixed bottom-0 right-6 w-64 shadow-md flex flex-col gap-2 p-4 rounded-md bg-[#1d1d1f] mb-20 ${
+          isOpen ? "open transition-all duration-300" : "hidden"
         }`}
       >
-        <div className="max-h-80 overflow-y-auto custom-scrollbar">
+        <div className="max-h-80 overflow-y-auto ">
           {chatLog.map((message, index) => (
             <>
               <div
@@ -150,22 +150,10 @@ const Suggestion = () => {
         <form>
           <div className=" full flex flex-col gap-2 rounded-md  bg-transparent ">
             <div>
-              <span className="relative animate-pulse  flex flex-col h-6 w-6 mx-auto my-2 ">
-                <span
-                  className={`absolute inline-flex h-full w-full rounded-full ${
-                    isLoading
-                      ? "bg-red-400 opacity-75"
-                      : "bg-sky-400 opacity-75"
-                  } opacity-75`}
-                >
-                  r
-                </span>
-
-                <span
-                  class={`relative inline-flex rounded-full h-6 w-6${
-                    isLoading ? " bg-red-500" : " bg-sky-500 "
-                  } `}
-                ></span>
+              <span className="relative animate-pulse  flex flex-col h-14 w-6 mx-auto my-2 ">
+                <div className={`flex items-start justify-center`}>
+                  <MyThreeComponent containerWidth={60} containerHeight={60} isLoading={isLoading} />
+                </div>
               </span>
             </div>
             <div className="flex gap-1 ">
@@ -201,7 +189,9 @@ const Suggestion = () => {
         </form>
       </div>
       <button
-        className="fixed bottom-8 right-10 w-10 h-10 flex items-center justify-center shadow-md rounded-full bg-sky-500"
+        className={`fixed bottom-8 right-10 w-10 h-10 flex items-center justify-center shadow-md rounded-full bg-sky-500 ${
+          isOpen ? "open rotate-90 duration-300" : ""
+        }`}
         onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
       >
         {isOpen ? (
@@ -211,7 +201,7 @@ const Suggestion = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-4 h-4"
+            className="w-4 h-4 "
           >
             <path
               strokeLinecap="round"
@@ -220,14 +210,10 @@ const Suggestion = () => {
             />
           </svg>
         ) : (
-          
-            <div>
-              <MyThreeComponent
-                containerWidth={containerWidth}
-                containerHeight={containerHeight}
-              />
-            </div>
-        
+          <MyThreeComponent
+            containerWidth={containerWidth}
+            containerHeight={containerHeight}
+          />
         )}
       </button>
     </div>

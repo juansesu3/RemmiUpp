@@ -1,56 +1,55 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 
-const MyThreeComponent = ({ containerWidth, containerHeight }) => {
+const MyThreeComponent = ({ containerWidth, containerHeight, isLoading }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    // Set up the scene, camera, and renderer
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color("#2a2a2c");
     const camera = new THREE.PerspectiveCamera(
-      50,
-      containerWidth / containerHeight, // Use container dimensions
+      25,
+      containerWidth / containerHeight,
       0.1,
       1000
     );
 
-    const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current });
-
-    renderer.setSize(containerWidth, containerHeight);
-    scene.background = new THREE.Color("#00000000");
-    // Create a sphere
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
-    const material = new THREE.MeshStandardMaterial({
-      color: "#009aff",
-      side: THREE.DoubleSide,
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvasRef.current,
+      alpha: true,
     });
-    const sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
+    renderer.setSize(containerWidth, containerHeight);
 
     camera.position.z = 5;
 
-    // Add a directional light with shadows
-    const light = new THREE.DirectionalLight(0xffffff, 5);
-    light.position.set(0, 2, 2);
-    light.castShadow = true;
-    light.shadow.mapSize.width = 1024;
-    light.shadow.mapSize.height = 1024;
-    light.shadow.camera.near = 0.5;
-    light.shadow.camera.far = 5;
-    scene.add(light);
+    const particles = new THREE.BufferGeometry();
+    const particleCount = 1000;
+    const positions = new Float32Array(particleCount * 3);
 
-    // Enable shadows for the sphere
-    sphere.castShadow = false; // Evitar que la esfera proyecte sombras
-    sphere.receiveShadow = false; // Evitar que la esfera reciba sombras
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(1 - Math.random() * 2);
+      positions[i] = Math.sin(phi) * Math.cos(theta);
+      positions[i + 1] = Math.sin(phi) * Math.sin(theta);
+      positions[i + 2] = Math.cos(phi);
+    }
 
-    // Mouse coordinates
-    const mouse = new THREE.Vector2();
+    particles.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({
+      color: `${isLoading ? "#FF0000" : "#009aff"}`,
+      size: 0.005,
+    });
+    const particleSystem = new THREE.Points(particles, material);
+    scene.add(particleSystem);
+
+    // Initial rotation angles
+    let rotationX = 0;
+    let rotationY = 0;
 
     // Handle mouse move event
     const handleMouseMove = (event) => {
-      // Calculate normalized mouse coordinates
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      rotationX = (event.clientY / window.innerHeight - 0.5) * Math.PI;
+      rotationY = (event.clientX / window.innerWidth - 0.5) * Math.PI;
     };
 
     // Add mouse move listener
@@ -60,13 +59,10 @@ const MyThreeComponent = ({ containerWidth, containerHeight }) => {
     const animate = () => {
       requestAnimationFrame(animate);
 
-      // Update sphere position based on mouse position
-      sphere.position.x = mouse.x * 1.5;
-      sphere.position.y = mouse.y * 1.5;
-
-      // Animate sphere's scale to create a pulsating effect
-      const scale = 1 + Math.sin(Date.now() * 0.005) * 0.1;
-      sphere.scale.set(scale, scale, scale);
+      // Update the rotation
+      particleSystem.rotation.x = 1;
+      particleSystem.rotation.y = rotationY;
+      particleSystem.rotation.z += 0.01;
 
       renderer.render(scene, camera);
     };
@@ -78,13 +74,9 @@ const MyThreeComponent = ({ containerWidth, containerHeight }) => {
       renderer.dispose();
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [containerWidth, containerHeight]); // Re-run effect when container dimensions change
+  }, [containerWidth, containerHeight, isLoading]);
 
-  return (
-    <div>
-      <canvas ref={canvasRef}></canvas>
-    </div>
-  );
+  return <canvas ref={canvasRef} className="rounded-full"></canvas>;
 };
 
 export default MyThreeComponent;
