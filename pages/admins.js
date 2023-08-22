@@ -1,17 +1,26 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { withSwal } from "react-sweetalert2";
 
-const AdminsPage = () => {
+const AdminsPage = ({ swal }) => {
   const [email, setEmail] = useState("");
   const [emails, setEmails] = useState([]);
+
+
   const addAdmin = async (ev) => {
     ev.preventDefault();
     axios.post("/api/admins", { email }).then((res) => {
       console.log(res.data);
+      swal.fire({
+        title: "Admin created!",
+        icon: "success",
+      });
       setEmail("");
     });
   };
+
+
   useEffect(() => {
     axios.get("/api/admins").then((response) => {
       setEmails(response.data);
@@ -33,7 +42,7 @@ const AdminsPage = () => {
             emails.map((email) => (
               <tr key={email._id}>
                 <td className="text-start text-white p-4">
-                  juan.se.suarez.ra@gmail.com
+                 {email.email}
                 </td>
               </tr>
             ))}
@@ -57,4 +66,6 @@ const AdminsPage = () => {
   );
 };
 
-export default AdminsPage;
+export default withSwal(({swal})=>(
+  <AdminsPage swal={swal}/>
+));
