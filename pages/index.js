@@ -14,10 +14,12 @@ const Home = () => {
     "w-full md:w-1/3 p-1 bg-inputColor flex flex-col items-center justify-between rounded-md shadow-lg";
 
   useEffect(() => {
-    axios.get("/api/expenses").then((response) => {
-      setExpenses(response.data);
-    });
-    totalLesss(expenses);
+    if (session) {
+      axios.get("/api/expenses").then((response) => {
+        setExpenses(response.data);
+      });
+      totalLesss(expenses);
+    }
   }, []);
 
   const totalLesss = (lesses) => {

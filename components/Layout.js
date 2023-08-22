@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import Suggestion from "./Suggestion";
+import Link from "next/link";
 
 const Layout = ({ children }) => {
   const [showNav, setShowNav] = useState(false);
@@ -34,12 +35,20 @@ const Layout = ({ children }) => {
               RemiUpp
             </h1>
           </div>
-          <button
-            onClick={() => signIn("google")}
-            className="bg-primary p-2 px-4 rounded-lg text-white font-medium"
-          >
-            Login with Google
-          </button>
+          <div className="flex flex-col gap-2 w-52 m-auto">
+            <button
+              onClick={() => signIn("google")}
+              className="bg-primary p-2 px-4 rounded-lg text-white font-medium"
+            >
+              Login with Google
+            </button>
+            <Link
+              href={"https://e-commerce-admin-kappa.vercel.app/"}
+              className="bg-gray-700 p-2 px-4 rounded-lg text-primary font-medium"
+            >
+              Login with demo
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -72,7 +81,6 @@ const Layout = ({ children }) => {
         <div className="fixed bottom-4 right-4">
           <Suggestion />
         </div>
-        
       </div>
     </div>
   );

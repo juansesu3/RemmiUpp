@@ -21,7 +21,7 @@ const handle = async (req, res) => {
   if (method === "POST") {
     const { email } = req.body;
     if (await Admin.findOne({ email })) {
-      res.json(400).json({ error: "already exist!" });
+      res.status(400).json({ message: "This admin already exist!" });
     } else {
       res.json(await Admin.create({ email }));
     }

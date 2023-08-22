@@ -12,8 +12,9 @@ const Nav = ({ show }) => {
   const { pathname } = router;
 
   const logout = async () => {
-    await router.push("/");
+    
     await signOut();
+    await router.push("/");
   };
 
   return (

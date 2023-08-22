@@ -13,15 +13,25 @@ const AdminsPage = ({ swal }) => {
 
   const addAdmin = async (ev) => {
     ev.preventDefault();
-    axios.post("/api/admins", { email }).then((res) => {
-      console.log(res.data);
-      swal.fire({
-        title: "Admin created!",
-        icon: "success",
+    axios
+      .post("/api/admins", { email })
+      .then((res) => {
+        console.log(res.data);
+        swal.fire({
+          title: "Admin created!",
+          icon: "success",
+        });
+        setEmail("");
+        loadsAdmins();
+      })
+      .catch((error) => {
+        console.log(error)
+        swal.fire({
+          title: "Error!",
+          text: error.response.data.message,
+          icon: "error",
+        });
       });
-      setEmail("");
-      loadsAdmins();
-    });
   };
 
   const loadsAdmins = () => {
