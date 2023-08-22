@@ -36,15 +36,17 @@ const Layout = ({ children }) => {
             </h1>
           </div>
           <div className="flex flex-col gap-2 w-52 m-auto">
+            <p className="text-gray-500 text-sm">For members</p>
             <button
               onClick={() => signIn("google")}
-              className="bg-primary p-2 px-4 rounded-lg text-white font-medium"
+              className="bg-primary p-2 px-4 rounded-lg text-white font-medium shadow-md"
             >
               Login with Google
             </button>
+            <p className="text-gray-500 text-sm mt-2">If you want to try it</p>
             <Link
               href={"https://e-commerce-admin-kappa.vercel.app/"}
-              className="bg-gray-700 p-2 px-4 rounded-lg text-primary font-medium"
+              className="bg-gray-700 p-2 px-4 rounded-lg text-primary font-medium shadow-md"
             >
               Login with demo
             </Link>
