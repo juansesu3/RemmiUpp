@@ -48,7 +48,7 @@ const Layout = ({ children }) => {
               href={"https://e-commerce-admin-kappa.vercel.app/"}
               className="bg-gray-700 p-2 px-4 rounded-lg text-primary font-medium shadow-md"
             >
-              Login with demo
+              Login with Demo
             </Link>
           </div>
         </div>

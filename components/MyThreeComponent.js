@@ -8,7 +8,7 @@ const MyThreeComponent = ({ containerWidth, containerHeight, isLoading }) => {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color("#2a2a2c");
     const camera = new THREE.PerspectiveCamera(
-      25,
+      23,
       containerWidth / containerHeight,
       0.1,
       1000
