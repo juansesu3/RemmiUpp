@@ -3,10 +3,37 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import Suggestion from "./Suggestion";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Register from "./Register";
 
 const Layout = ({ children }) => {
   const [showNav, setShowNav] = useState(false);
   const { data: session } = useSession();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const router = useRouter();
+
+  const handleSignInCredentials = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result.error) {
+        setError(true);
+        console.log(error);
+        return;
+      }
+      router.replace("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!session) {
     return (
       <div className="bg-[#1d1d1f] w-screen h-screen flex items-center">
@@ -36,20 +63,37 @@ const Layout = ({ children }) => {
             </h1>
           </div>
           <div className="flex flex-col gap-2 w-52 m-auto">
-            <p className="text-gray-500 text-sm">For members</p>
-            <button
-              onClick={() => signIn("google")}
-              className="bg-primary p-2 px-4 rounded-lg text-white font-medium shadow-md"
-            >
-              Login with Google
-            </button>
-            <p className="text-gray-500 text-sm mt-2">If you want to try it</p>
-            <Link
-              href={"https://e-commerce-admin-kappa.vercel.app/"}
-              className="bg-gray-700 p-2 px-4 rounded-lg text-primary font-medium shadow-md"
-            >
-              Login with Demo
-            </Link>
+            <div className="flex flex-col  w-52 m-auto">
+              <form className="flex flex-col gap-2 mt-2">
+                <input
+                  type="text"
+                  placeholder="user"
+                  value={email}
+                  onChange={(ev) => setEmail(ev.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="password"
+                  value={password}
+                  onChange={(ev) => setPassword(ev.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={handleSignInCredentials}
+                  href={"https://e-commerce-admin-kappa.vercel.app/"}
+                  className="bg-gray-700 p-2 px-4 rounded-lg text-primary font-medium shadow-md"
+                >
+                  Login
+                </button>
+
+                {error && (
+                  <p className="px-2 bg-red-500 text-white rounded-md">
+                    Invalid Credentials{" "}
+                  </p>
+                )}
+              </form>
+             
+            </div>
           </div>
         </div>
       </div>
