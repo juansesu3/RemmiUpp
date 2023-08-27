@@ -1,10 +1,8 @@
 import Nav from "@/components/Nav";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useState } from "react";
 import Suggestion from "./Suggestion";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import Register from "./Register";
 
 const Layout = ({ children }) => {
   const [showNav, setShowNav] = useState(false);
@@ -92,7 +90,6 @@ const Layout = ({ children }) => {
                   </p>
                 )}
               </form>
-             
             </div>
           </div>
         </div>

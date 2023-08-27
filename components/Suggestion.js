@@ -2,7 +2,6 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import MyThreeComponent from "./MyThreeComponent";
-require("dotenv").config();
 
 const Suggestion = () => {
   const { data: session } = useSession();
@@ -29,13 +28,19 @@ const Suggestion = () => {
     const pocketBalance = totalAddAmount - totalLessesAmount;
     setPocket(pocketBalance);
   }, [add, lesses]);
+  console.log(add);
 
   const totalAdd = (add) => {
-    const totalAmount = add.reduce(
-      (accumulator, currentValue) => accumulator + currentValue.amount,
-      0
-    );
-    return totalAmount;
+    if (add.length === []) {
+      const totalAmount = add.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.amount,
+        0
+      );
+
+      return totalAmount;
+    } else {
+      return;
+    }
   };
   const totalLesss = (lesses) => {
     const totalAmount = lesses.reduce(
@@ -152,7 +157,11 @@ const Suggestion = () => {
             <div>
               <span className="relative animate-pulse  flex flex-col h-14 w-6 mx-auto my-2 ">
                 <div className={`flex items-start justify-center`}>
-                  <MyThreeComponent containerWidth={60} containerHeight={60} isLoading={isLoading} />
+                  <MyThreeComponent
+                    containerWidth={60}
+                    containerHeight={60}
+                    isLoading={isLoading}
+                  />
                 </div>
               </span>
             </div>
