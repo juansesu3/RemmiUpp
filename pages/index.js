@@ -7,8 +7,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-  const api = process.env.REACT_APP_OPENAI_API_KEY;
-  console.log(api);
+
   const { data: session } = useSession();
   const [expenses, setExpenses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

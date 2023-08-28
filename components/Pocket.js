@@ -44,7 +44,6 @@ const Pocket = () => {
 
   return (
     <div className=" relative bg-tableBg w-full h-44 z-[0]  md:w-60 rounded-md shadow-lg p-4 flex flex-col items-center justify-between">
-      <Info />
       <h2 className="text-center text-gray-300">Bucket</h2>
       <h3 className="text-primary  text-4xl">
         <div className="flex justify-center items-center">
@@ -95,6 +94,7 @@ const Pocket = () => {
             </svg>
           </div>
         )}
+        <Info />
       </span>
     </div>
   );

@@ -5,7 +5,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
 const isAdminEmails = async (email) => {
-  return true;
   return !!(await User.findOne({ email }));
 };
 

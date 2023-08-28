@@ -13,8 +13,6 @@ const ExpensesPage = () => {
     });
   }, []);
 
-  console.log(expenses);
-
   return (
     <Layout>
       <h1 className="text-primary">Expenses page</h1>

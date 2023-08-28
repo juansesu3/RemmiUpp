@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
   reactStrictMode: true,
   images: {
     domains: [
@@ -9,6 +8,12 @@ const nextConfig = {
       "lh3.googleusercontent.com",
     ],
   },
-}
+  pwa: {
+    dest: "public",
+    //disable: process.env.NODE_ENV === 'development', // Solo habilita PWA en producción
+    register: true,
+    skipWaiting: true,
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

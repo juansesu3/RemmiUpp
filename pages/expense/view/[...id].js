@@ -52,7 +52,7 @@ const ViewExpensesPage = () => {
           {isLoading && <Spinner />}
           {
             <Image
-              src={expInfo?.imgCheck[0]}
+              src={expInfo?.imgCheck[0] ? expInfo?.imgCheck[0] : "/"}
               alt="Check image"
               width={100}
               height={100}

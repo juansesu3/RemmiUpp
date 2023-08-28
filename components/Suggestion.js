@@ -3,52 +3,16 @@ import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import MyThreeComponent from "./MyThreeComponent";
 
-const Suggestion = ({mobile}) => {
+const Suggestion = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [pocket, setPocket] = useState(Number);
+
   const [add, setAdd] = useState([]);
   const [lesses, setLessses] = useState([]);
 
-  useEffect(() => {
-    axios.get("api/refill").then((response) => {
-      setAdd(response.data);
-    });
-    axios.get("/api/expenses").then((response) => {
-      setLessses(response.data);
-    });
-  }, []);
-
-  useEffect(() => {
-    const totalAddAmount = totalAdd(add);
-    const totalLessesAmount = totalLesss(lesses);
-    const pocketBalance = totalAddAmount - totalLessesAmount;
-    setPocket(pocketBalance);
-  }, [add, lesses]);
-
-
-  const totalAdd = (add) => {
-    if (add.length === []) {
-      const totalAmount = add.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.amount,
-        0
-      );
-
-      return totalAmount;
-    } else {
-      return;
-    }
-  };
-  const totalLesss = (lesses) => {
-    const totalAmount = lesses.reduce(
-      (accumulator, currentValue) => accumulator + currentValue.amount,
-      0
-    );
-    return totalAmount;
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -94,9 +58,9 @@ const Suggestion = ({mobile}) => {
           content: `Hi there, provide of the following data:
           This is refills:{${JSON.stringify(add)}},
           This is expenses:{${JSON.stringify(lesses)}}, 
-          this available money after (expenses-refills): {${JSON.stringify(
+          This is available money after(expenses-refills) Bucket:${JSON.stringify(
             pocket
-          )}},
+          )}: 
          
           ${inputValue}`,
         },
@@ -216,13 +180,10 @@ const Suggestion = ({mobile}) => {
             />
           </svg>
         ) : (
-          
-            <MyThreeComponent
+          <MyThreeComponent
             containerWidth={containerWidth}
             containerHeight={containerHeight}
           />
-          
-    
         )}
       </button>
     </div>

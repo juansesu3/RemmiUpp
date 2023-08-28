@@ -1,9 +1,9 @@
 import Nav from "@/components/Nav";
 import { useSession, signIn } from "next-auth/react";
 import { useState } from "react";
-import Suggestion from "./Suggestion";
+
 import { useRouter } from "next/router";
-import Register from "./Register";
+
 
 const Layout = ({ children }) => {
   const [showNav, setShowNav] = useState(false);
@@ -33,7 +33,9 @@ const Layout = ({ children }) => {
     }
   };
 
+ 
   if (!session) {
+  
     return (
       <div className="bg-[#1d1d1f] w-screen h-screen flex items-center">
         <div className="text-center w-full ">
@@ -123,12 +125,6 @@ const Layout = ({ children }) => {
         <Nav show={showNav} />
         <div className="flex-grow py-4 px-2">{children}</div>
 
-        <div className="hidden bottom-4 right-4 md:flex">
-          <Suggestion />
-        </div>
-        <div className="flex bottom-4 right-4 md:hidden">
-          <Suggestion mobile={true} />
-        </div>
       </div>
     </div>
   );

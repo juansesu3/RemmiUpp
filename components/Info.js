@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 
 const Info = ({ swal }) => {
   const empty = (
-    <div className="flex  w-64 justify-between">
+    <div className="flex  w-64 justify-between ">
       <div className="flex gap-[12.5px]">
         <div className="text-white font-medium">Dehydrated</div>
         <svg
@@ -67,7 +67,7 @@ const Info = ({ swal }) => {
   return (
     <div
       onClick={handleClick}
-      className="absolute bottom-4 right-4 flex items-center justify-center gap-1 cursor-pointer"
+      className="absolute bottom-1 right-1 flex items-center justify-center gap-1 cursor-pointer"
     >
       <span className="text-gray-600 text-sm">info</span>
       <svg
