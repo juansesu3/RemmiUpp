@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import Pocket from "@/components/Pocket";
+import Spinner from "@/components/Spinner";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -10,13 +11,16 @@ const Home = () => {
   console.log(api);
   const { data: session } = useSession();
   const [expenses, setExpenses] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const conte =
     "w-full md:w-1/3 p-1 bg-inputColor flex flex-col items-center justify-between rounded-md shadow-lg";
 
   useEffect(() => {
     if (session) {
+      setIsLoading(true);
       axios.get("/api/expenses").then((response) => {
         setExpenses(response.data);
+        setIsLoading(false);
       });
       totalLesss(expenses);
     }
@@ -58,14 +62,22 @@ const Home = () => {
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Shoppings</h3>
             <p className="text-primary text-4xl">
-              {expenses && expenses.slice(0, 7).length}
+              {isLoading === true ? (
+                <Spinner />
+              ) : (
+                <>{expenses && expenses.slice(0, 7).length}</>
+              )}
             </p>
             <p className="text-gray-500 text-center">Shoppings this week</p>
           </div>
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Store</h3>
             <p className="text-primary text-4xl text-center">
-              {expenses.slice(0, 7)[0]?.storeName}
+              {isLoading === true ? (
+                <Spinner />
+              ) : (
+                <> {expenses.slice(0, 7)[0]?.storeName}</>
+              )}
             </p>
             <p className="text-gray-500 text-center">
               the last store you visit this week
@@ -74,7 +86,11 @@ const Home = () => {
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Expenses</h3>
             <p className="text-primary text-4xl">
-              {totalLesss(expenses.slice(0, 7)).toFixed(2)} €
+              {isLoading === true ? (
+                <Spinner />
+              ) : (
+                <> {totalLesss(expenses.slice(0, 7)).toFixed(2)} €</>
+              )}
             </p>
             <p className="text-gray-500 text-center">
               the mount expenses this week{" "}

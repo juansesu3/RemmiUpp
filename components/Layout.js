@@ -121,8 +121,11 @@ const Layout = ({ children }) => {
         <Nav show={showNav} />
         <div className="flex-grow py-4 px-2">{children}</div>
 
-        <div className="fixed bottom-4 right-4">
+        <div className="hidden bottom-4 right-4 md:flex">
           <Suggestion />
+        </div>
+        <div className="flex bottom-4 right-4 md:hidden">
+          <Suggestion mobile={true} />
         </div>
       </div>
     </div>

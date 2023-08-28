@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import MyThreeComponent from "./MyThreeComponent";
 
-const Suggestion = () => {
+const Suggestion = ({mobile}) => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -51,6 +51,7 @@ const Suggestion = () => {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     const OutPrompt = {
       message: `${inputValue} `,
     };
@@ -118,11 +119,11 @@ const Suggestion = () => {
         console.log(error);
       });
   };
-  const containerWidth = 80; // Define el ancho del contenedor según tus necesidades
-  const containerHeight = 80; // Define la altura del contenedor según tus necesidades
+  const containerWidth = 70; // Define el ancho del contenedor según tus necesidades
+  const containerHeight = 70; // Define la altura del contenedor según tus necesidades
 
   return (
-    <div className="relative ">
+    <div className="relative  ">
       <div
         className={`fixed bottom-0 right-6 w-64 shadow-md flex flex-col gap-2 p-4 rounded-md bg-[#1d1d1f] mb-20 ${
           isOpen ? "open transition-all duration-300" : "hidden"
@@ -152,7 +153,7 @@ const Suggestion = () => {
             </>
           ))}
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className=" full flex flex-col gap-2 rounded-md  bg-transparent ">
             <div>
               <span className="relative animate-pulse  flex flex-col h-14 w-6 mx-auto my-2 ">
@@ -173,11 +174,7 @@ const Suggestion = () => {
                 value={inputValue}
                 onChange={(ev) => setInputValue(ev.target.value)}
               />
-              <button
-                onClick={handleSubmit}
-                type="button"
-                className="shadow-md btn-primary"
-              >
+              <button type="submit" className="shadow-md btn-primary">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -219,10 +216,13 @@ const Suggestion = () => {
             />
           </svg>
         ) : (
-          <MyThreeComponent
+          
+            <MyThreeComponent
             containerWidth={containerWidth}
             containerHeight={containerHeight}
           />
+          
+    
         )}
       </button>
     </div>

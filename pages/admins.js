@@ -77,7 +77,7 @@ const AdminsPage = ({ swal }) => {
       <table className="basic mt-2">
         <thead>
           <tr>
-            <td>Admin mail</td>
+            <td>Admin mail/username</td>
 
             <td></td>
           </tr>
@@ -129,7 +129,7 @@ const AdminsPage = ({ swal }) => {
             value={email}
             onChange={(ev) => setEmail(ev.target.value)}
             className="mb-0"
-            placeholder="google email"
+            placeholder="custom mail/username"
           />
           <button className="btn-primary md:w-32 whitespace-nowrap">
             Add admin

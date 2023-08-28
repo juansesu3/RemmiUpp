@@ -6,9 +6,9 @@ const MyThreeComponent = ({ containerWidth, containerHeight, isLoading }) => {
 
   useEffect(() => {
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#2a2a2c");
+    scene.background =new THREE.Color(`#262f38`)
     const camera = new THREE.PerspectiveCamera(
-      23,
+      22,
       containerWidth / containerHeight,
       0.1,
       1000
@@ -26,7 +26,7 @@ const MyThreeComponent = ({ containerWidth, containerHeight, isLoading }) => {
     const particleCount = 1000;
     const positions = new Float32Array(particleCount * 3);
 
-    for (let i = 0; i < particleCount * 3; i += 3) {
+    for (let i = 0; i < particleCount * 3; i += 1) {
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(1 - Math.random() * 2);
       positions[i] = Math.sin(phi) * Math.cos(theta);
@@ -48,7 +48,7 @@ const MyThreeComponent = ({ containerWidth, containerHeight, isLoading }) => {
 
     // Handle mouse move event
     const handleMouseMove = (event) => {
-      rotationX = (event.clientY / window.innerHeight - 0.5) * Math.PI;
+      rotationX = (event.clientY / window.innerHeight - 0.005) * Math.PI;
       rotationY = (event.clientX / window.innerWidth - 0.5) * Math.PI;
     };
 
