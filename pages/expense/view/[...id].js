@@ -11,13 +11,13 @@ const ViewExpensesPage = () => {
   const { id } = router.query;
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     if (!id) {
       return;
     }
     axios.get("/api/expenses?id=" + id).then((response) => {
       setExpInfo(response.data);
-      setIsLoading(false)
+      setIsLoading(false);
     });
   }, [id]);
   const goBack = () => {
@@ -36,28 +36,29 @@ const ViewExpensesPage = () => {
         <div className="flex flex-col gap-2">
           <h2 className="text-primary font-medium">Store name</h2>
           <p className="bg-bgGray text-white font-medium p-4 w-30 rounded-lg shadow-lg text-center">
-           
-            {isLoading && (
-              <Spinner/>
-            )}
+            {isLoading && <Spinner />}
             {expInfo?.storeName}
           </p>
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="text-primary font-medium">Amount</h2>
-          <p className="bg-bgGray text-white p-4 w-24 rounded-lg shadow-lg text-center">
-            {expInfo?.amount} €
+          <p className="bg-bgGray text-white font-medium p-4 w-24 rounded-lg shadow-lg text-center">
+            {expInfo?.amount}
+            <span className="text-red-500"> €</span>
           </p>
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="text-primary font-medium">Check image</h2>
-          <Image
-            src={expInfo?.imgCheck[0]}
-            alt="Check image"
-            width={200}
-            height={100}
-            className="rounded-md shadow-md w-full"
-          />
+          {isLoading && <Spinner />}
+          {
+            <Image
+              src={expInfo?.imgCheck[0]}
+              alt="Check image"
+              width={100}
+              height={100}
+              className="rounded-md shadow-md w-44 m-auto"
+            />
+          }
         </div>
         <button onClick={handleClick} className="btn-primary">
           Back to expenses

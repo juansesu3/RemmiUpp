@@ -28,7 +28,7 @@ const Suggestion = ({mobile}) => {
     const pocketBalance = totalAddAmount - totalLessesAmount;
     setPocket(pocketBalance);
   }, [add, lesses]);
-  console.log(add);
+
 
   const totalAdd = (add) => {
     if (add.length === []) {

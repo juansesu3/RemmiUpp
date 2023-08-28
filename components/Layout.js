@@ -3,6 +3,7 @@ import { useSession, signIn } from "next-auth/react";
 import { useState } from "react";
 import Suggestion from "./Suggestion";
 import { useRouter } from "next/router";
+import Register from "./Register";
 
 const Layout = ({ children }) => {
   const [showNav, setShowNav] = useState(false);
@@ -90,6 +91,7 @@ const Layout = ({ children }) => {
                   </p>
                 )}
               </form>
+              
             </div>
           </div>
         </div>

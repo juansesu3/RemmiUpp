@@ -24,8 +24,6 @@ const Info = ({ swal }) => {
     </div>
   );
 
-
-
   const full = (
     <div className="flex  w-64 justify-between">
       <div className="flex gap-[27px]">
@@ -51,8 +49,6 @@ const Info = ({ swal }) => {
     <div className="flex flex-col gap-2 items-center ">
       {full}
       {empty}
-     
-      
     </div>
   );
   const handleClick = () => {
@@ -67,13 +63,13 @@ const Info = ({ swal }) => {
       background: "#2a2a2c",
     });
   };
-  console.log(empty);
 
   return (
-    <div  onClick={handleClick} className="absolute bottom-4 right-4 flex items-center justify-center gap-1 cursor-pointer">
-      <span className="text-gray-600 text-sm">
-        info
-      </span>
+    <div
+      onClick={handleClick}
+      className="absolute bottom-4 right-4 flex items-center justify-center gap-1 cursor-pointer"
+    >
+      <span className="text-gray-600 text-sm">info</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
