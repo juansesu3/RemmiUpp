@@ -6,6 +6,7 @@ const ExpensesSchema = new Schema(
     imgCheck: [{ type: String, require: true }],
     amount: { type: Number, required: true },
     expType: { type: String, required: true },
+    date: { type: Date, },
   },
   {
     timestamps: true,

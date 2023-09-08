@@ -2,15 +2,19 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Spinner from "./Spinner";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 const FormExpenses = () => {
   const router = useRouter();
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(null);
   const [storeName, setStoreName] = useState("");
   const [imgCheck, setImgCheck] = useState([]);
   const [amount, setAmount] = useState("");
   const [expType, setExpType] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+
   const typeShop = [
     {
       name: "BigShop",
@@ -18,9 +22,19 @@ const FormExpenses = () => {
     { name: "FastShop" },
   ];
 
+  const handleStartDateChange = (date) => {
+    const selectedDate = moment(date);
+    const timezoneOffset = selectedDate.utcOffset();
+    const adjustedDate = selectedDate.subtract(timezoneOffset, "minutes");
+    const formattedDate = adjustedDate.format("MM/DD/YYYY HH:mm"); // Formatea la fecha como "mes/día/año y minutos"
+    console.log("Formatted Date >>", formattedDate);
+
+    setDate(adjustedDate); // Almacena el objeto Moment en el estado
+  };
   const handleSubmit = async (ev) => {
     ev.preventDefault();
-    const data = { date, storeName, imgCheck, amount, expType };
+    const dateToStore = date?.toDate();
+    const data = { date: dateToStore, storeName, imgCheck, amount, expType };
     await axios.post("/api/expenses", data);
     router.push("/expenses");
   };
@@ -46,15 +60,29 @@ const FormExpenses = () => {
   return (
     <div className="rounded-md w-full">
       <form onSubmit={handleSubmit} className="md:w-1/2 flex flex-col gap-2">
-        <label>Store</label>
+        <label>
+          Store <span className="text-orange-500">*</span>
+        </label>
         <input
           value={storeName}
           onChange={(ev) => setStoreName(ev.target.value)}
           type="text"
           placeholder="store name"
         />
+        <div className="flex flex-col">
+          <label>
+            Purchase Date <span className="text-green-500/20">(optional)</span>
+          </label>
+          <DatePicker
+            placeholderText="start date"
+            selected={date ? new Date(date) : null}
+            onChange={(date) => handleStartDateChange(date)}
+          />
+        </div>
 
-        <label>Check</label>
+        <label>
+          Check <span className="text-orange-500">*</span>
+        </label>
         <div className="mb-2 flex flex-wrap gap-1">
           {!!imgCheck?.length &&
             imgCheck.map((link) => (
@@ -92,7 +120,9 @@ const FormExpenses = () => {
           </label>
         </div>
 
-        <label>Mount</label>
+        <label>
+          Mount <span className="text-orange-500">*</span>
+        </label>
         <input
           value={amount}
           onChange={(ev) => setAmount(ev.target.value)}
@@ -100,7 +130,9 @@ const FormExpenses = () => {
           placeholder="00.00 €"
         />
 
-        <label>type</label>
+        <label>
+          Type <span className="text-orange-500">*</span>
+        </label>
         <select value={expType} onChange={(ev) => setExpType(ev.target.value)}>
           {typeShop.length > 0 &&
             typeShop.map((ts) => (

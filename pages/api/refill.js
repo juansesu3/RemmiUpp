@@ -11,13 +11,15 @@ const handle = async (req, res) => {
     if (req.query?.id) {
       res.json(await Refill.findOne({ _id: req.query.id }));
     } else {
-      res.json(await Refill.find());
+      const refill = await Refill.find().sort({ createdAt: -1 });
+      res.json(refill);
     }
   }
 
   if (method === "POST") {
-    const { amount, currency } = req.body;
+    const {date, amount, currency } = req.body;
     const refillDoc = await Refill.create({
+      date,
       amount,
       currency,
     });

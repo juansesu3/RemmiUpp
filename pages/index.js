@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-
   const { data: session } = useSession();
   const [expenses, setExpenses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +91,7 @@ const Home = () => {
               )}
             </p>
             <p className="text-gray-500 text-center">
-              the mount expenses this week{" "}
+              The total expenses this week{" "}
             </p>
           </div>
         </div>
@@ -127,7 +126,7 @@ const Home = () => {
               {totalLesss(expenses.slice(8, 15))}
             </p>
             <p className="text-gray-500 text-center">
-              the mount expenses this week{" "}
+              The total expenses last week{" "}
             </p>
           </div>
         </div>

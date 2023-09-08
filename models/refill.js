@@ -1,9 +1,10 @@
-import  { Schema, model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const RefillSchema = new Schema(
   {
-   amount:{type:Number, required:true},
-   currency:{type:String, }
+    amount: { type: Number, required: true },
+    currency: { type: String, required: true },
+    date: { type: Date },
   },
   {
     timestamps: true,
