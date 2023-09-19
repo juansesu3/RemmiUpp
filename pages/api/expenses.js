@@ -3,10 +3,9 @@ import { Expenses } from "@/models/expenses";
 import { isAdminRequest } from "./auth/[...nextauth]";
 
 const handle = async (req, res) => {
-  
   await mongooseConnect();
   await isAdminRequest(req, res);
-  
+
   const { method } = req;
 
   if (method === "GET") {
@@ -16,7 +15,7 @@ const handle = async (req, res) => {
       const expenses = await Expenses.find().sort({ createdAt: -1 });
 
       // Ordenar los gastos por fecha en orden ascendente
-      
+
       res.json(expenses);
     }
   }

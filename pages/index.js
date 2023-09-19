@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { subHours } from "date-fns";
 
 const Home = () => {
   const { data: session } = useSession();
@@ -31,6 +32,14 @@ const Home = () => {
     );
     return totalAmount;
   };
+
+  const purchaseThisWeek = expenses.filter(
+    (p) => new Date(p.date) > subHours(new Date(), 24 * 7)
+  );
+  const purchaseLastWeek = expenses.filter(
+    (p) => new Date(p.date) > subHours(new Date(), 24 * 15)
+  );
+  console.log(purchaseLastWeek);
 
   return (
     <Layout>
@@ -63,7 +72,7 @@ const Home = () => {
               {isLoading === true ? (
                 <Spinner />
               ) : (
-                <>{expenses && expenses.slice(0, 7).length}</>
+                <>{purchaseThisWeek && purchaseThisWeek.length}</>
               )}
             </p>
             <p className="text-gray-500 text-center">Shoppings this week</p>
@@ -74,7 +83,7 @@ const Home = () => {
               {isLoading === true ? (
                 <Spinner />
               ) : (
-                <> {expenses.slice(0, 7)[0]?.storeName}</>
+                <> {purchaseThisWeek[0]?.storeName}</>
               )}
             </p>
             <p className="text-gray-500 text-center">
@@ -87,7 +96,7 @@ const Home = () => {
               {isLoading === true ? (
                 <Spinner />
               ) : (
-                <> {totalLesss(expenses.slice(0, 7)).toFixed(2)} €</>
+                <> {totalLesss(purchaseThisWeek).toFixed(2)} €</>
               )}
             </p>
             <p className="text-gray-500 text-center">
@@ -103,18 +112,13 @@ const Home = () => {
         <div className="flex w-full justify-between gap-2 flex-col md:flex-row">
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Shoppings</h3>
-            <p className="text-primary text-4xl">
-              {" "}
-              {expenses && expenses.slice(8, 15).length}
-            </p>
+            <p className="text-primary text-4xl"> {purchaseLastWeek.length}</p>
             <p className="text-gray-500 text-center">shoppings last week</p>
           </div>
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Store</h3>
             <p className="text-primary text-4xl">
-              {expenses.slice(8, 15)[0] > 0
-                ? expenses.slice(8, 15)[0].storeName
-                : "..."}
+              {purchaseLastWeek[0] ? purchaseLastWeek[0].storeName : "..."}
             </p>
             <p className="text-gray-500 text-center">
               the last store you visit last week
@@ -123,7 +127,7 @@ const Home = () => {
           <div className={conte}>
             <h3 className="text-gray-400 font-medium">Expenses</h3>
             <p className="text-primary text-4xl">
-              {totalLesss(expenses.slice(8, 15))}
+              {totalLesss(purchaseLastWeek).toFixed(2)}
             </p>
             <p className="text-gray-500 text-center">
               The total expenses last week{" "}

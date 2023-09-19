@@ -29,7 +29,7 @@ const ExpensesPage = () => {
           <thead>
             <tr>
               <td>amount</td>
-              <td>store</td>
+              <td>Date</td>
               <td></td>
             </tr>
           </thead>
@@ -40,11 +40,25 @@ const ExpensesPage = () => {
                   <td className="whitespace-nowrap">
                     {exp.amount} <span className="text-red-600">€</span>
                   </td>
-                  <td>
-                    {format(
-                      new Date(exp?.date ? exp?.date : exp?.createdAt),
-                      dateFormat
-                    )}
+                  <td className="flex flex-col gap-[2px]">
+                    <span
+                      className={`rounded-md shadow-lg ${
+                        format(
+                          new Date(exp?.date ? exp?.date : exp?.createdAt),
+                          dateFormat
+                        ) === format(new Date(exp?.createdAt), dateFormat)
+                          ? "bg-blue-700"
+                          : "bg-gray-600"
+                      } text-center`}
+                    >
+                      {format(
+                        new Date(exp?.date ? exp?.date : exp?.createdAt),
+                        dateFormat
+                      )}
+                    </span>
+                    <span className="rounded-md shadow-lg bg-blue-700 border-red-500 text-center">
+                      {format(new Date(exp?.createdAt), dateFormat)}
+                    </span>
                   </td>
 
                   <td>
