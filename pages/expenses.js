@@ -4,8 +4,9 @@ import Pocket from "@/components/Pocket";
 import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-
+import { format } from "date-fns";
 const ExpensesPage = () => {
+  const dateFormat = "MM/dd/yyyy HH:mm:ss";
   const [expenses, setExpenses] = useState([]);
   useEffect(() => {
     axios.get("/api/expenses").then((response) => {
@@ -39,7 +40,12 @@ const ExpensesPage = () => {
                   <td className="whitespace-nowrap">
                     {exp.amount} <span className="text-red-600">€</span>
                   </td>
-                  <td>{exp.storeName}</td>
+                  <td>
+                    {format(
+                      new Date(exp?.date ? exp?.date : exp?.createdAt),
+                      dateFormat
+                    )}
+                  </td>
 
                   <td>
                     {" "}
