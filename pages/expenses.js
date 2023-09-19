@@ -13,7 +13,7 @@ const ExpensesPage = () => {
       setExpenses(response.data);
     });
   }, []);
-
+//commet to try some changess
   return (
     <Layout>
       <h1 className="text-primary">Expenses page</h1>
